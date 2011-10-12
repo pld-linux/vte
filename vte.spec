@@ -26,8 +26,9 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	glib2 >= 1:2.28.0
-# sr@Latn vs. sr@latin
+Requires:	gtk+3 >= 3.1.9
 Requires:	pango >= 1:1.22.0
+# sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -127,7 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la \
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name}-2.90
 
