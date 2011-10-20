@@ -2,7 +2,7 @@ Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
 Version:	0.26.2
-Release:	2
+Release:	3
 Epoch:		1
 License:	LGPL v2+
 Group:		X11/Libraries
