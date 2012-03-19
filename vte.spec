@@ -1,21 +1,21 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.30.1
-Release:	3
+Version:	0.32.0
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.30/%{name}-%{version}.tar.xz
-# Source0-md5:	514f48346f176f91297731f6fdb1cffc
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.32/%{name}-%{version}.tar.xz
+# Source0-md5:	d8f796ceca24327ccb8963486d7ad6cc
 # https://bugzilla.gnome.org/show_bug.cgi?id=663779
 Patch0:		%{name}-alt-meta.patch
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.28.0
+BuildRequires:	glib2-devel >= 1:2.31.13
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	gtk+3-devel >= 3.1.9
+BuildRequires:	gtk+3-devel >= 3.2.0
 BuildRequires:	gtk-doc >= 1.13
 BuildRequires:	gtk-doc-automake >= 1.13
 BuildRequires:	intltool >= 0.40.0
@@ -27,8 +27,8 @@ BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	%{name}-common = %{version}-%{release}
-Requires:	glib2 >= 1:2.28.0
-Requires:	gtk+3 >= 3.1.9
+Requires:	glib2 >= 1:2.31.13
+Requires:	gtk+3 >= 3.2.0
 Requires:	pango >= 1:1.22.0
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -59,8 +59,8 @@ Summary:	Header files for VTE for GTK+ 3
 Summary(pl.UTF-8):	Pliki nagłówkowe VTE dla GTK+ 3
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.28.0
-Requires:	gtk+3-devel >= 3.1.9
+Requires:	glib2-devel >= 1:2.31.13
+Requires:	gtk+3-devel >= 3.2.0
 Requires:	ncurses-devel
 Requires:	pango-devel >= 1:1.22.0
 Conflicts:	gnome-libs-devel < 1.4.1.2
@@ -152,7 +152,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
 %attr(2755,root,utmp) %{_libdir}/gnome-pty-helper
-%{_datadir}/vte
 
 %files devel
 %defattr(644,root,root,755)
