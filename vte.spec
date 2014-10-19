@@ -1,35 +1,37 @@
+# TODO: is alt-meta patch still needed?
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.36.3
+Version:	0.38.1
 Release:	1
-License:	LGPL v2+
+License:	LGPL v2.1+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.36/%{name}-%{version}.tar.xz
-# Source0-md5:	3f9df4c9a67b09bf5c660bf5c3bae109
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.38/%{name}-%{version}.tar.xz
+# Source0-md5:	b34acede2cabc2a4f86775365352aabc
 # https://bugzilla.gnome.org/show_bug.cgi?id=663779
 Patch0:		%{name}-alt-meta.patch
-Patch1:		%{name}-am.patch
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.32.0
+BuildRequires:	glib2-devel >= 1:2.40.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	gtk+3-devel >= 3.2.0
+BuildRequires:	gtk+3-devel >= 3.8.0
 BuildRequires:	gtk-doc >= 1.13
 BuildRequires:	gtk-doc-automake >= 1.13
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libtool >= 2:2.2
+BuildRequires:	libxml2-progs >= 2
 BuildRequires:	ncurses-devel
 BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	tar >= 1:1.22
+#BuildRequires:	vala >= 2:0.18
 BuildRequires:	xz
 Requires:	%{name}-common = %{version}-%{release}
-Requires:	glib2 >= 1:2.32.0
-Requires:	gtk+3 >= 3.2.0
+Requires:	glib2 >= 1:2.40.0
+Requires:	gtk+3 >= 3.8.0
 Requires:	pango >= 1:1.22.0
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -60,8 +62,8 @@ Summary:	Header files for VTE for GTK+ 3
 Summary(pl.UTF-8):	Pliki nagłówkowe VTE dla GTK+ 3
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.32.0
-Requires:	gtk+3-devel >= 3.2.0
+Requires:	glib2-devel >= 1:2.40.0
+Requires:	gtk+3-devel >= 3.8.0
 Requires:	ncurses-devel
 Requires:	pango-devel >= 1:1.22.0
 Conflicts:	gnome-libs-devel < 1.4.1.2
@@ -86,6 +88,19 @@ Static version of VTE library for GTK+ 3.
 %description static -l pl.UTF-8
 Statyczna wersja biblioteki VTE dla GTK+ 3.
 
+%package -n vala-vte
+Summary:	Vala API for VTE library
+Summary(pl.UTF-8):	API języka Vala dla biblioteki VTE
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	vala >= 2:0.18
+
+%description -n vala-vte
+Vala API for VTE library.
+
+%description -n vala-vte -l pl.UTF-8
+API języka Vala dla biblioteki VTE.
+
 %package apidocs
 Summary:	VTE API documentation (GTK+ 3 version)
 Summary(pl.UTF-8):	Dokumentacja API VTE (wersja dla GTK+ 3)
@@ -101,7 +116,6 @@ Dokumentacja API VTE (wersja dla GTK+ 3).
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__gtkdocize}
@@ -121,6 +135,7 @@ cd gnome-pty-helper
 cd ..
 %configure \
 	--disable-silent-rules \
+	--enable-gnome-pty-helper \
 	--enable-gtk-doc \
 	--enable-introspection \
 	--with-default-emulation=xterm \
@@ -135,7 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%find_lang %{name}-2.90
+%find_lang %{name}-2.91
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -143,12 +158,12 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files -f vte-2.90.lang
+%files -f vte-2.91.lang
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/vte2_90
-%attr(755,root,root) %{_libdir}/libvte2_90.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libvte2_90.so.9
-%{_libdir}/girepository-1.0/Vte-2.90.typelib
+%attr(755,root,root) %{_bindir}/vte-2.91
+%attr(755,root,root) %{_libdir}/libvte-2.91.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libvte-2.91.so.0
+%{_libdir}/girepository-1.0/Vte-2.91.typelib
 %config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.sh
 
 %files common
@@ -158,15 +173,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libvte2_90.so
-%{_includedir}/vte-2.90
-%{_pkgconfigdir}/vte-2.90.pc
-%{_datadir}/gir-1.0/Vte-2.90.gir
+%attr(755,root,root) %{_libdir}/libvte-2.91.so
+%{_includedir}/vte-2.91
+%{_pkgconfigdir}/vte-2.91.pc
+%{_datadir}/gir-1.0/Vte-2.91.gir
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libvte2_90.a
+%{_libdir}/libvte-2.91.a
+
+%files -n vala-vte
+%defattr(644,root,root,755)
+%{_datadir}/vala/vapi/vte-2.91.vapi
 
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/vte-2.90
+%{_gtkdocdir}/vte-2.91
