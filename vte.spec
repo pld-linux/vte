@@ -2,12 +2,12 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.38.3
-Release:	2
+Version:	0.40.0
+Release:	1
 License:	LGPL v2.1+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.38/%{name}-%{version}.tar.xz
-# Source0-md5:	c2a38185ccd64f685a13b5c80b9a6aa8
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.40/%{name}-%{version}.tar.xz
+# Source0-md5:	5593de4ac25ca578e26f01be57c0c3ff
 # https://bugzilla.gnome.org/show_bug.cgi?id=663779
 Patch0:		%{name}-alt-meta.patch
 BuildRequires:	autoconf >= 2.63
@@ -15,6 +15,7 @@ BuildRequires:	automake >= 1:1.9
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.40.0
+BuildRequires:	gnutls-devel >= 3.2.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gtk+3-devel >= 3.8.0
 BuildRequires:	gtk-doc >= 1.13
@@ -31,6 +32,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	glib2 >= 1:2.40.0
+Requires:	gnutls >= 3.2.0
 Requires:	gtk+3 >= 3.8.0
 Requires:	pango >= 1:1.22.0
 # sr@Latn vs. sr@latin
