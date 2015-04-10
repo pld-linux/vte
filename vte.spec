@@ -30,6 +30,7 @@ BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	tar >= 1:1.22
 #BuildRequires:	vala >= 2:0.18
 BuildRequires:	xz
+BuildRequires:	zlib-devel
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	glib2 >= 1:2.40.0
 Requires:	gnutls >= 3.2.0
@@ -65,9 +66,11 @@ Summary(pl.UTF-8):	Pliki nagłówkowe VTE dla GTK+ 3
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.40.0
+Requires:	gnutls-devel >= 3.2.0
 Requires:	gtk+3-devel >= 3.8.0
 Requires:	ncurses-devel
 Requires:	pango-devel >= 1:1.22.0
+Requires:	zlib-devel
 Conflicts:	gnome-libs-devel < 1.4.1.2
 
 %description devel
