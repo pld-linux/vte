@@ -3,7 +3,7 @@ Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
 Version:	0.40.2
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.40/%{name}-%{version}.tar.xz
@@ -111,6 +111,9 @@ Summary:	VTE API documentation (GTK+ 3 version)
 Summary(pl.UTF-8):	Dokumentacja API VTE (wersja dla GTK+ 3)
 Group:		Documentation
 Requires:	gtk-doc-common
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description apidocs
 VTE API documentation (GTK+ 3 version).
