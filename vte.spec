@@ -2,20 +2,18 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.40.2
-Release:	2
+Version:	0.42.0
+Release:	1
 License:	LGPL v2.1+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.40/%{name}-%{version}.tar.xz
-# Source0-md5:	6a7a6af8eb0ebadaf3338e820a7229a3
-# https://bugzilla.gnome.org/show_bug.cgi?id=663779
-Patch0:		%{name}-alt-meta.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.42/%{name}-%{version}.tar.xz
+# Source0-md5:	6dd98fd69b66508dcc2707bcdbdab93c
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.40.0
-BuildRequires:	gnutls-devel >= 3.2.0
+BuildRequires:	gnutls-devel >= 3.2.7
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gtk+3-devel >= 3.8.0
 BuildRequires:	gtk-doc >= 1.13
@@ -31,11 +29,11 @@ BuildRequires:	tar >= 1:1.22
 #BuildRequires:	vala >= 2:0.18
 BuildRequires:	xz
 BuildRequires:	zlib-devel
-Requires:	%{name}-common = %{version}-%{release}
 Requires:	glib2 >= 1:2.40.0
-Requires:	gnutls >= 3.2.0
+Requires:	gnutls >= 3.2.7
 Requires:	gtk+3 >= 3.8.0
 Requires:	pango >= 1:1.22.0
+Obsoletes:	vte-common < 0.42.0
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -66,7 +64,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe VTE dla GTK+ 3
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.40.0
-Requires:	gnutls-devel >= 3.2.0
+Requires:	gnutls-devel >= 3.2.7
 Requires:	gtk+3-devel >= 3.8.0
 Requires:	ncurses-devel
 Requires:	pango-devel >= 1:1.22.0
@@ -123,7 +121,6 @@ Dokumentacja API VTE (wersja dla GTK+ 3).
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__gtkdocize}
@@ -134,16 +131,8 @@ Dokumentacja API VTE (wersja dla GTK+ 3).
 %{__autoheader}
 %{__automake}
 %{__autoconf}
-cd gnome-pty-helper
-%{__libtoolize}
-%{__aclocal}
-%{__autoheader}
-%{__automake}
-%{__autoconf}
-cd ..
 %configure \
 	--disable-silent-rules \
-	--enable-gnome-pty-helper \
 	--enable-gtk-doc \
 	--enable-introspection \
 	--with-default-emulation=xterm \
@@ -168,16 +157,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f vte-2.91.lang
 %defattr(644,root,root,755)
+%doc AUTHORS ChangeLog MAINTAINERS NEWS README
 %attr(755,root,root) %{_bindir}/vte-2.91
 %attr(755,root,root) %{_libdir}/libvte-2.91.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libvte-2.91.so.0
 %{_libdir}/girepository-1.0/Vte-2.91.typelib
 %config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.sh
-
-%files common
-%defattr(644,root,root,755)
-%doc AUTHORS ChangeLog MAINTAINERS NEWS README
-%attr(2755,root,utmp) %{_libdir}/gnome-pty-helper
 
 %files devel
 %defattr(644,root,root,755)
