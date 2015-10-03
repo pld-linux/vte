@@ -1,4 +1,7 @@
-# TODO: is alt-meta patch still needed?
+#
+# Conditional build:
+%bcond_without	glade	# Glade catalog
+#
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
@@ -12,6 +15,7 @@ BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
+%{?with_glade:BuildRequires:	glade-devel >= 3}
 BuildRequires:	glib2-devel >= 1:2.40.0
 BuildRequires:	gnutls-devel >= 3.2.7
 BuildRequires:	gobject-introspection-devel >= 0.10.0
@@ -91,6 +95,19 @@ Static version of VTE library for GTK+ 3.
 %description static -l pl.UTF-8
 Statyczna wersja biblioteki VTE dla GTK+ 3.
 
+%package glade
+Summary:	VTE catalog file for Glade
+Summary(pl.UTF-8):	Plik katalogu VTE dla Glade
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	glade >= 3
+
+%description glade
+VTE catalog file for Glade.
+
+%description glade -l pl.UTF-8
+Plik katalogu VTE dla Glade.
+
 %package -n vala-vte
 Summary:	Vala API for VTE library
 Summary(pl.UTF-8):	API języka Vala dla biblioteki VTE
@@ -133,6 +150,7 @@ Dokumentacja API VTE (wersja dla GTK+ 3).
 %{__autoconf}
 %configure \
 	--disable-silent-rules \
+	%{?with_glade:--enable-glade-catalogue} \
 	--enable-gtk-doc \
 	--enable-introspection \
 	--with-default-emulation=xterm \
@@ -174,6 +192,14 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libvte-2.91.a
+
+%if %{with glade}
+%files glade
+%defattr(644,root,root,755)
+%{_datadir}/glade/catalogs/vte-2.91.xml
+%{_datadir}/glade/pixmaps/hicolor/16x16/actions/widget-vte-terminal.png
+%{_datadir}/glade/pixmaps/hicolor/22x22/actions/widget-vte-terminal.png
+%endif
 
 %files -n vala-vte
 %defattr(644,root,root,755)
