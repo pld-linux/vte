@@ -153,7 +153,6 @@ Dokumentacja API VTE (wersja dla GTK+ 3).
 	%{?with_glade:--enable-glade-catalogue} \
 	--enable-gtk-doc \
 	--enable-introspection \
-	--with-default-emulation=xterm \
 	--with-html-dir=%{_gtkdocdir}
 %{__make}
 
