@@ -1,12 +1,12 @@
 #
 # Conditional build:
 %bcond_without	glade	# Glade catalog
-#
+
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
 Version:	0.44.0
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.44/%{name}-%{version}.tar.xz
@@ -115,6 +115,9 @@ Summary(pl.UTF-8):	API języka Vala dla biblioteki VTE
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala >= 2:0.18
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description -n vala-vte
 Vala API for VTE library.
