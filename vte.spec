@@ -28,9 +28,12 @@ BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-progs >= 2
 BuildRequires:	ncurses-devel
 BuildRequires:	pango-devel >= 1:1.22.0
+# disabled in configure (as of 0.44.x)
+#BuildRequires:	pcre2-8-devel >= 10.21
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	tar >= 1:1.22
+# for test application
 #BuildRequires:	vala >= 2:0.18
 BuildRequires:	xz
 BuildRequires:	zlib-devel
