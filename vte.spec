@@ -5,12 +5,12 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.46.0
+Version:	0.46.1
 Release:	1
 License:	LGPL v2.1+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.46/%{name}-%{version}.tar.xz
-# Source0-md5:	4767fe9928bc01afe8d9d968a76a8589
+# Source0-md5:	e8f4393b9f1ec2e2f3cdb3fd4f5a16de
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	docbook-dtd412-xml
@@ -181,7 +181,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f vte-2.91.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog MAINTAINERS NEWS README
+%doc AUTHORS ChangeLog NEWS README
 %attr(755,root,root) %{_bindir}/vte-2.91
 %attr(755,root,root) %{_libdir}/libvte-2.91.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libvte-2.91.so.0
