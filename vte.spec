@@ -33,7 +33,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	tar >= 1:1.22
 # for test application
-#BuildRequires:	vala >= 2:0.18
+#BuildRequires:	vala >= 2:0.24
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires:	glib2 >= 1:2.40.0
@@ -117,7 +117,7 @@ Summary:	Vala API for VTE library
 Summary(pl.UTF-8):	API języka Vala dla biblioteki VTE
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Requires:	vala >= 2:0.18
+Requires:	vala >= 2:0.24
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
