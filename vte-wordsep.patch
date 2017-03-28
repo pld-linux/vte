@@ -1,0 +1,11 @@
+--- vte-0.48.1/src/vte.cc.wordsep	2017-03-28 22:00:28.568912081 +0200
++++ vte-0.48.1/src/vte.cc	2017-03-28 22:01:42.653878196 +0200
+@@ -94,7 +94,7 @@ typedef gunichar wint_t;
+ #define howmany(x, y) (((x) + ((y) - 1)) / (y))
+ #endif
+ 
+-#define WORD_CHAR_EXCEPTIONS_DEFAULT "-#%&+,./=?@\\_~\302\267"
++#define WORD_CHAR_EXCEPTIONS_DEFAULT "-#%&+,./=?@:;\\_~\302\267"
+ 
+ #define I_(string) (g_intern_static_string(string))
+ 
