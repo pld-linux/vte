@@ -1,16 +1,17 @@
 #
 # Conditional build:
 %bcond_without	glade	# Glade catalog
+%bcond_with	gtk4	# GTK+ 4 based library [doesn't build with 3.90]
 
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.48.2
+Version:	0.48.3
 Release:	1
 License:	LGPL v2.1+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.48/%{name}-%{version}.tar.xz
-# Source0-md5:	bc0601624af5668df5cd37e3fe1237b2
+# Source0-md5:	b300675ac5f269aa6eb48fe89a0d726d
 Patch0:		%{name}-wordsep.patch
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.9
@@ -20,7 +21,9 @@ BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.40.0
 BuildRequires:	gnutls-devel >= 3.2.7
 BuildRequires:	gobject-introspection-devel >= 0.10.0
+BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.8.0
+%{?with_gtk4:BuildRequires:	gtk+4-devel >= 3.89}
 BuildRequires:	gtk-doc >= 1.13
 BuildRequires:	gtk-doc-automake >= 1.13
 BuildRequires:	intltool >= 0.40.0
@@ -157,18 +160,39 @@ Dokumentacja API VTE (wersja dla GTK+ 3).
 %{__autoheader}
 %{__automake}
 %{__autoconf}
-%configure \
+install -d build-gtk3
+cd build-gtk3
+../%configure \
 	--disable-silent-rules \
 	%{?with_glade:--enable-glade-catalogue} \
 	--enable-gtk-doc \
 	--enable-introspection \
 	--with-html-dir=%{_gtkdocdir}
 %{__make}
+cd ..
+
+%if %{with gtk4}
+install -d build-gtk4
+cd build-gtk4
+# note: "3.902468" is a result of configure.ac bug (unquoted brackets)
+../%configure \
+	--disable-silent-rules \
+	--enable-gtk-doc \
+	--enable-introspection \
+	--with-gtk=3.902468 \
+	--with-html-dir=%{_gtkdocdir}
+%{__make}
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%if %{with gtk4}
+%{__make} -C build-gtk4 install \
+	DESTDIR=$RPM_BUILD_ROOT
+%endif
+
+%{__make} -C build-gtk3 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
