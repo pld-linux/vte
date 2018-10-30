@@ -28,7 +28,7 @@ BuildRequires:	gtk+3-devel >= 3.8.0
 BuildRequires:	gtk-doc >= 1.13
 BuildRequires:	gtk-doc-automake >= 1.13
 BuildRequires:	intltool >= 0.40.0
-BuildRequires:	libstdc++-devel >= 6:4.7
+BuildRequires:	libstdc++-devel >= 6:5.0
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-progs >= 2
 BuildRequires:	ncurses-devel
