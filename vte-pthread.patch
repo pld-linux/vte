@@ -1,0 +1,12 @@
+diff -urN vte-0.56.1.orig/configure.ac vte-0.56.1/configure.ac
+--- vte-0.56.1.orig/configure.ac	2019-04-12 18:39:06.398656910 +0200
++++ vte-0.56.1/configure.ac	2019-04-12 18:39:36.561754726 +0200
+@@ -442,6 +442,8 @@
+ AC_SUBST([AM_CXXFLAGS])
+ AC_SUBST([AM_LDFLAGS])
+ 
++VTE_LIBS="$VTE_LIBS -lpthread"
++
+ ################################################################################
+ 
+ AC_CONFIG_FILES([
