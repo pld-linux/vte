@@ -16,6 +16,7 @@ Patch0:		%{name}-wordsep.patch
 Patch1:		%{name}-pthread.patch
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.9
+BuildRequires:	cairo-gobject-devel
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
@@ -29,7 +30,8 @@ BuildRequires:	gtk+3-devel >= 3.8.0
 BuildRequires:	gtk-doc >= 1.13
 BuildRequires:	gtk-doc-automake >= 1.13
 BuildRequires:	intltool >= 0.40.0
-BuildRequires:	libstdc++-devel >= 6:5.0
+# -std=c++17, with constexpr lambdas support
+BuildRequires:	libstdc++-devel >= 6:7.0
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-progs >= 2
 BuildRequires:	ncurses-devel
@@ -38,8 +40,7 @@ BuildRequires:	pcre2-8-devel >= 10.21
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.592
 BuildRequires:	tar >= 1:1.22
-# for test application
-#BuildRequires:	vala >= 2:0.24
+BuildRequires:	vala >= 2:0.24
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires:	glib2 >= 1:2.40.0
