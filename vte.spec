@@ -5,15 +5,17 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.58.1
+Version:	0.58.2
 Release:	1
-License:	LGPL v2.1+
+# some files have LGPL v2.1+ signature, but some LGPL v3+
+License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.58/%{name}-%{version}.tar.xz
-# Source0-md5:	ba78671a32c523fa43b3782f031c699a
+# Source0-md5:	dadbf2c1d9864d3ea185738f97ab63af
 Patch0:		%{name}-wordsep.patch
 BuildRequires:	cairo-gobject-devel
 BuildRequires:	docbook-dtd412-xml
+BuildRequires:	fribidi-devel >= 1.0.0
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.40.0
@@ -21,16 +23,13 @@ BuildRequires:	gnutls-devel >= 3.2.7
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.8.0
-%{?with_gtk4:BuildRequires:	gtk+4-devel >= 3.89}
+%{?with_gtk4:BuildRequires:	gtk+4-devel >= 4.0.0}
 BuildRequires:	gtk-doc >= 1.13
 BuildRequires:	intltool >= 0.40.0
-# C++17 support
-BuildRequires:	libstdc++-devel >= 6:7.0
-# -std=c++17, with constexpr lambdas support
+# C++17 support (-std=gnu++17, with constexpr lambdas support)
 BuildRequires:	libstdc++-devel >= 6:7.0
 BuildRequires:	libxml2-progs >= 2
 BuildRequires:	meson >= 0.49.0
-BuildRequires:	ncurses-devel
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	pcre2-8-devel >= 10.21
@@ -40,6 +39,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala >= 2:0.24
 BuildRequires:	xz
 BuildRequires:	zlib-devel
+Requires:	fribidi >= 1.0.0
 Requires:	glib2 >= 1:2.40.0
 Requires:	gnutls >= 3.2.7
 Requires:	gtk+3 >= 3.8.0
@@ -58,30 +58,15 @@ gnome-terminal among other programs.
 Ten pakiet zawiera kontrolkę terminala dla GTK+ 3.x. Jest używany
 przez gnome-terminal oraz inne programy.
 
-%package common
-Summary:	Common files for vte and vte0
-Summary(pl.UTF-8):	Pliki wspólne dla vte i vte0
-Group:		X11/Libraries
-Requires(pre):	utempter
-
-%description common
-Common files for GTK+ 3 based vte and GTK+ 2 based vte0.
-
-%description common -l pl.UTF-8
-Pliki wspólne dla vte opartego na GTK+ 3 oraz vte0 opartego na GTK+ 2.
-
 %package devel
 Summary:	Header files for VTE for GTK+ 3
 Summary(pl.UTF-8):	Pliki nagłówkowe VTE dla GTK+ 3
+License:	LGPL v3+
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.40.0
-Requires:	gnutls-devel >= 3.2.7
 Requires:	gtk+3-devel >= 3.8.0
-Requires:	ncurses-devel
 Requires:	pango-devel >= 1:1.22.0
-Requires:	pcre2-8-devel >= 10.21
-Requires:	zlib-devel
 Conflicts:	gnome-libs-devel < 1.4.1.2
 
 %description devel
@@ -94,6 +79,7 @@ biblioteki vte opartej na GTK+ 3.
 %package -n vala-vte
 Summary:	Vala API for VTE library
 Summary(pl.UTF-8):	API języka Vala dla biblioteki VTE
+License:	LGPL v3+
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala >= 2:0.24
