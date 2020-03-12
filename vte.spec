@@ -5,31 +5,32 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.58.3
+Version:	0.60.0
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.58/%{name}-%{version}.tar.xz
-# Source0-md5:	f59eb0784a361c0939c03d4566255916
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.60/%{name}-%{version}.tar.xz
+# Source0-md5:	9f427c605843cda08615094b994f5163
 Patch0:		%{name}-wordsep.patch
 BuildRequires:	cairo-gobject-devel
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	fribidi-devel >= 1.0.0
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.40.0
+BuildRequires:	glib2-devel >= 1:2.52.0
 BuildRequires:	gnutls-devel >= 3.2.7
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
-BuildRequires:	gtk+3-devel >= 3.8.0
+BuildRequires:	gtk+3-devel >= 3.20.0
 %{?with_gtk4:BuildRequires:	gtk+4-devel >= 4.0.0}
 BuildRequires:	gtk-doc >= 1.13
 BuildRequires:	intltool >= 0.40.0
+BuildRequires:	libicu-devel >= 4.8
 # C++17 support (-std=gnu++17, with constexpr lambdas support)
 BuildRequires:	libstdc++-devel >= 6:7.0
 BuildRequires:	libxml2-progs >= 2
-BuildRequires:	meson >= 0.49.0
+BuildRequires:	meson >= 0.50.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	pcre2-8-devel >= 10.21
@@ -40,9 +41,10 @@ BuildRequires:	vala >= 2:0.24
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires:	fribidi >= 1.0.0
-Requires:	glib2 >= 1:2.40.0
+Requires:	glib2 >= 1:2.52.0
 Requires:	gnutls >= 3.2.7
-Requires:	gtk+3 >= 3.8.0
+Requires:	gtk+3 >= 3.20.0
+Requires:	libicu >= 4.8
 Requires:	pango >= 1:1.22.0
 Obsoletes:	vte-common < 0.42.0
 Obsoletes:	vte-glade < 0.58.0
@@ -64,8 +66,8 @@ Summary(pl.UTF-8):	Pliki nagłówkowe VTE dla GTK+ 3
 License:	LGPL v3+
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.40.0
-Requires:	gtk+3-devel >= 3.8.0
+Requires:	glib2-devel >= 1:2.52.0
+Requires:	gtk+3-devel >= 3.20.0
 Requires:	pango-devel >= 1:1.22.0
 Conflicts:	gnome-libs-devel < 1.4.1.2
 
@@ -137,10 +139,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README.md
 %attr(755,root,root) %{_bindir}/vte-2.91
+%attr(755,root,root) %{_libexecdir}/vte-urlencode-cwd
 %attr(755,root,root) %{_libdir}/libvte-2.91.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libvte-2.91.so.0
 %{_libdir}/girepository-1.0/Vte-2.91.typelib
+%config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.csh
 %config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.sh
+%dir /usr/lib/systemd/user/vte-spawn-.scope.d
+/usr/lib/systemd/user/vte-spawn-.scope.d/defaults.conf
 
 %files devel
 %defattr(644,root,root,755)
