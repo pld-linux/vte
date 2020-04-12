@@ -36,6 +36,7 @@ BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	pcre2-8-devel >= 10.21
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	systemd-devel >= 1:220
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala >= 2:0.24
 BuildRequires:	xz
@@ -46,10 +47,9 @@ Requires:	gnutls >= 3.2.7
 Requires:	gtk+3 >= 3.20.0
 Requires:	libicu >= 4.8
 Requires:	pango >= 1:1.22.0
+Requires:	systemd-libs >= 1:220
 Obsoletes:	vte-common < 0.42.0
 Obsoletes:	vte-glade < 0.58.0
-# sr@Latn vs. sr@latin
-Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -145,8 +145,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/girepository-1.0/Vte-2.91.typelib
 %config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.csh
 %config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.sh
-%dir /usr/lib/systemd/user/vte-spawn-.scope.d
-/usr/lib/systemd/user/vte-spawn-.scope.d/defaults.conf
+%dir %{systemduserunitdir}/vte-spawn-.scope.d
+%{systemduserunitdir}/vte-spawn-.scope.d/defaults.conf
 
 %files devel
 %defattr(644,root,root,755)
