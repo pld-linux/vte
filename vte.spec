@@ -1,17 +1,18 @@
 #
 # Conditional build:
+%bcond_without	apidocs	# API documentation
 %bcond_with	gtk4	# GTK+ 4 based library [doesn't build with 3.90]
 
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.60.3
-Release:	2
+Version:	0.62.0
+Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.60/%{name}-%{version}.tar.xz
-# Source0-md5:	4214712ecab2d50e2a3a07897c3ada49
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.62/%{name}-%{version}.tar.xz
+# Source0-md5:	7562e1dbe1992a48cbcfd10b7acc3ff6
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
@@ -25,7 +26,7 @@ BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.20.0
 %{?with_gtk4:BuildRequires:	gtk+4-devel >= 4.0.0}
-BuildRequires:	gtk-doc >= 1.13
+%{?with_apidocs:BuildRequires:	gtk-doc >= 1.13}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libicu-devel >= 4.8
 # C++17 support (-std=gnu++17, with constexpr lambdas support)
@@ -117,7 +118,7 @@ Dokumentacja API VTE (wersja dla GTK+ 3).
 
 %build
 %meson build \
-	-Ddocs=true \
+	%{?with_apidocs:-Ddocs=true} \
 	-Dgtk3=true \
 	-Dgtk4=%{__true_false gtk4}
 
@@ -138,7 +139,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f vte-2.91.lang
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README.md
+%doc AUTHORS README.md
 %attr(755,root,root) %{_bindir}/vte-2.91
 %attr(755,root,root) %{_libexecdir}/vte-urlencode-cwd
 %attr(755,root,root) %{_libdir}/libvte-2.91.so.*.*.*
@@ -161,6 +162,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/vala/vapi/vte-2.91.deps
 %{_datadir}/vala/vapi/vte-2.91.vapi
 
+%if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
 %{_gtkdocdir}/vte-2.91
+%endif
