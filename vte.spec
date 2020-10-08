@@ -6,13 +6,13 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.62.0
+Version:	0.62.1
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/vte/0.62/%{name}-%{version}.tar.xz
-# Source0-md5:	7562e1dbe1992a48cbcfd10b7acc3ff6
+# Source0-md5:	b363c82b7d485d696fc1164bebca92b0
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
@@ -37,7 +37,7 @@ BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	pcre2-8-devel >= 10.21
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	systemd-devel >= 1:220
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala >= 2:0.24
@@ -87,9 +87,7 @@ License:	LGPL v3+
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala >= 2:0.24
-%if "%{_rpmversion}" >= "4.6"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description -n vala-vte
 Vala API for VTE library.
@@ -102,9 +100,7 @@ Summary:	VTE API documentation (GTK+ 3 version)
 Summary(pl.UTF-8):	Dokumentacja API VTE (wersja dla GTK+ 3)
 Group:		Documentation
 Requires:	gtk-doc-common
-%if "%{_rpmversion}" >= "4.6"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description apidocs
 VTE API documentation (GTK+ 3 version).
