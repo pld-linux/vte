@@ -87,7 +87,7 @@ License:	LGPL v3+
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala >= 2:0.24
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description -n vala-vte
 Vala API for VTE library.
@@ -100,7 +100,7 @@ Summary:	VTE API documentation (GTK+ 3 version)
 Summary(pl.UTF-8):	Dokumentacja API VTE (wersja dla GTK+ 3)
 Group:		Documentation
 Requires:	gtk-doc-common
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description apidocs
 VTE API documentation (GTK+ 3 version).
