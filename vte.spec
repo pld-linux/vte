@@ -1,23 +1,26 @@
 #
 # Conditional build:
 %bcond_without	apidocs	# API documentation
-%bcond_with	gtk4	# GTK+ 4 based library [doesn't build with 3.90]
+%bcond_without	glade	# Glade catalog
+%bcond_with	gtk4	# GTK+ 4 based library [not ready for gtk+4 -> gtk4 rename]
 
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.62.3
+Version:	0.64.0
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/vte/0.62/%{name}-%{version}.tar.xz
-# Source0-md5:	234c80d99b7200ac39734f77366da822
+Source0:	https://download.gnome.org/sources/vte/0.64/%{name}-%{version}.tar.xz
+# Source0-md5:	b4d21f17b1c80381f9f8c387d1756df3
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	fribidi-devel >= 1.0.0
+# C11
+BuildRequires:	gcc >= 6:4.7
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.52.0
@@ -51,7 +54,6 @@ Requires:	libicu >= 4.8
 Requires:	pango >= 1:1.22.0
 Requires:	systemd-libs >= 1:220
 Obsoletes:	vte-common < 0.42.0
-Obsoletes:	vte-glade < 0.58.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -79,6 +81,19 @@ This package contains header files for GTK+ 3 based vte library.
 %description devel -l pl.UTF-8
 Pliki nagłówkowe potrzebne do kompilowania programów używających
 biblioteki vte opartej na GTK+ 3.
+
+%package glade
+Summary:	VTE catalog file for Glade
+Summary(pl.UTF-8):	Plik katalogu VTE dla Glade
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	glade >= 3
+
+%description glade
+VTE catalog file for Glade.
+
+%description glade -l pl.UTF-8
+Plik katalogu VTE dla Glade.
 
 %package -n vala-vte
 Summary:	Vala API for VTE library
@@ -115,6 +130,7 @@ Dokumentacja API VTE (wersja dla GTK+ 3).
 %build
 %meson build \
 	%{?with_apidocs:-Ddocs=true} \
+	%{!?with_glade:-Dglade=false} \
 	-Dgtk3=true \
 	-Dgtk4=%{__true_false gtk4}
 
@@ -135,7 +151,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f vte-2.91.lang
 %defattr(644,root,root,755)
-%doc AUTHORS README.md
+%doc AUTHORS ChangeLog README.md
 %attr(755,root,root) %{_bindir}/vte-2.91
 %attr(755,root,root) %{_libexecdir}/vte-urlencode-cwd
 %attr(755,root,root) %{_libdir}/libvte-2.91.so.*.*.*
@@ -152,6 +168,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/vte-2.91
 %{_pkgconfigdir}/vte-2.91.pc
 %{_datadir}/gir-1.0/Vte-2.91.gir
+
+%if %{with glade}
+%files glade
+%defattr(644,root,root,755)
+%{_datadir}/glade/catalogs/vte-2.91.xml
+%{_datadir}/glade/pixmaps/hicolor/*x*/actions/widget-vte-terminal.png
+%endif
 
 %files -n vala-vte
 %defattr(644,root,root,755)
