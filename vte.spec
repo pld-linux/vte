@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	apidocs	# API documentation
 %bcond_without	glade	# Glade catalog
-%bcond_with	gtk4	# GTK+ 4 based library [not ready for gtk+4 -> gtk4 rename]
+%bcond_with	gtk4	# GTK+ 4 based library [not ready for gtk+4 to gtk4 rename]
 
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
