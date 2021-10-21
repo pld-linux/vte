@@ -2,18 +2,18 @@
 # Conditional build:
 %bcond_without	apidocs	# API documentation
 %bcond_without	glade	# Glade catalog
-%bcond_with	gtk4	# GTK+ 4 based library [not ready for gtk+4 to gtk4 rename]
+%bcond_with	gtk4	# GTK+ 4 based library [not supported yet in 0.66.0]
 
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.64.2
-Release:	2
+Version:	0.66.0
+Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/vte/0.64/%{name}-%{version}.tar.xz
-# Source0-md5:	b603109f6662d41bfef43e62bb08ba13
+Source0:	https://download.gnome.org/sources/vte/0.66/%{name}-%{version}.tar.xz
+# Source0-md5:	b06eb2592012e5689ddf44faf6d5df4a
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
@@ -28,12 +28,12 @@ BuildRequires:	gnutls-devel >= 3.2.7
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.20.0
-%{?with_gtk4:BuildRequires:	gtk+4-devel >= 4.0.0}
+%{?with_gtk4:BuildRequires:	gtk4-devel >= 4.0.1}
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.13}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libicu-devel >= 4.8
-# C++17 support (-std=gnu++17, with constexpr lambdas support)
-BuildRequires:	libstdc++-devel >= 6:7.0
+# C++20 support (-std=gnu++2a)
+BuildRequires:	libstdc++-devel >= 6:8.0
 BuildRequires:	libxml2-progs >= 2
 BuildRequires:	meson >= 0.50.0
 BuildRequires:	ninja >= 1.5
@@ -128,6 +128,12 @@ Dokumentacja API VTE (wersja dla GTK+ 3).
 %setup -q
 %patch0 -p1
 
+# it seems 8.0 with -std=gnu++2a is sufficient for 0.66.x (-std=gnu++20 option was added in 10.0)
+%{__sed} -i -e '/cxx_req_std/ s/gnu++20/gnu++2a/; /gxx_req_version/ s/10\.0/8.0/' meson.build
+
+# adjust for PLD %{_gtkdocdir}
+%{__sed} -i -e '/HTML_DIR/ s,/gtk-doc/,/doc/gtk-doc/,' doc/reference/Makefile.docs
+
 %build
 %meson build \
 	%{?with_apidocs:-Ddocs=true} \
@@ -185,5 +191,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/vte-2.91
+%{_gtkdocdir}/vte-gtk3-2.91
 %endif
