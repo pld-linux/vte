@@ -128,8 +128,10 @@ Dokumentacja API VTE (wersja dla GTK+ 3).
 %setup -q
 %patch0 -p1
 
-# it seems 8.0 with -std=gnu++2a is sufficient for 0.66.x (-std=gnu++20 option was added in 10.0)
+# it seems 9.0 with -std=gnu++2a is sufficient for 0.68.x (-std=gnu++20 option was added in 10.0)
 %{__sed} -i -e '/cxx_req_std/ s/gnu++20/gnu++2a/; /gxx_req_version/ s/10\.0/8.0/' meson.build
+# ...except for single test, which wants consteval and constinit
+%{__sed} -i -e 's/consteval //;s/constinit //' src/pastify-test.cc
 
 # adjust for PLD %{_gtkdocdir}
 %{__sed} -i -e '/HTML_DIR/ s,/gtk-doc/,/doc/gtk-doc/,' doc/reference/Makefile.docs
