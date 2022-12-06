@@ -2,18 +2,18 @@
 # Conditional build:
 %bcond_without	apidocs	# API documentation
 %bcond_without	glade	# Glade catalog
-%bcond_with	gtk4	# GTK+ 4 based library [not supported yet in 0.66.0]
+%bcond_without	gtk4	# GTK+ 4 based library
 
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.68.0
-Release:	2
+Version:	0.70.2
+Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/vte/0.68/%{name}-%{version}.tar.xz
-# Source0-md5:	895a99ff50461fa65717112afbf56e8d
+Source0:	https://download.gnome.org/sources/vte/0.70/%{name}-%{version}.tar.xz
+# Source0-md5:	5f1064024d0a961a5d6d549cb4264a1b
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
@@ -27,9 +27,9 @@ BuildRequires:	glib2-devel >= 1:2.52.0
 BuildRequires:	gnutls-devel >= 3.2.7
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
-BuildRequires:	gtk+3-devel >= 3.20.0
+BuildRequires:	gtk+3-devel >= 3.24.0
 %{?with_gtk4:BuildRequires:	gtk4-devel >= 4.0.1}
-%{?with_apidocs:BuildRequires:	gtk-doc >= 1.13}
+%{?with_apidocs:BuildRequires:	gi-docgen}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libicu-devel >= 4.8
 # C++20 support (-std=gnu++2a, char8_t)
@@ -50,7 +50,7 @@ BuildRequires:	zlib-devel
 Requires:	fribidi >= 1.0.0
 Requires:	glib2 >= 1:2.52.0
 Requires:	gnutls >= 3.2.7
-Requires:	gtk+3 >= 3.20.0
+Requires:	gtk+3 >= 3.24.0
 Requires:	libicu >= 4.8
 Requires:	pango >= 1:1.22.0
 Requires:	systemd-libs >= 1:220
@@ -72,7 +72,7 @@ License:	LGPL v3+
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.52.0
-Requires:	gtk+3-devel >= 3.20.0
+Requires:	gtk+3-devel >= 3.24.0
 Requires:	pango-devel >= 1:1.22.0
 Conflicts:	gnome-libs-devel < 1.4.1.2
 
@@ -124,17 +124,84 @@ VTE API documentation (GTK+ 3 version).
 %description apidocs -l pl.UTF-8
 Dokumentacja API VTE (wersja dla GTK+ 3).
 
+%package gtk4
+Summary:	VTE terminal widget library (GTK 4 version)
+Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE (wersja dla GTK 4)
+Group:		Libraries
+Requires:	fribidi >= 1.0.0
+Requires:	glib2 >= 1:2.52.0
+Requires:	gnutls >= 3.2.7
+Requires:	gtk4 >= 4.0.1
+Requires:	libicu >= 4.8
+Requires:	pango >= 1:1.22.0
+Requires:	systemd-libs >= 1:220
+# for common files
+Suggests:	%{name} = %{version}-%{release}
+
+%description gtk4
+The vte package contains a terminal widget for GTK 4.x. It's used by
+gnome-terminal among other programs.
+
+%description gtk4 -l pl.UTF-8
+Ten pakiet zawiera kontrolkę terminala dla GTK 4. Jest używany przez
+gnome-terminal oraz inne programy.
+
+%package gtk4-devel
+Summary:	Header files for VTE for GTK 4
+Summary(pl.UTF-8):	Pliki nagłówkowe VTE dla GTK 4
+License:	LGPL v3+
+Group:		X11/Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	glib2-devel >= 1:2.52.0
+Requires:	gtk4-devel >= 4.0.1
+Requires:	pango-devel >= 1:1.22.0
+
+%description gtk4-devel
+This package contains header files for GTK 4 based vte library.
+
+%description gtk4-devel -l pl.UTF-8
+Pliki nagłówkowe potrzebne do kompilowania programów używających
+biblioteki vte opartej na GTK 4.
+
+%package -n vala-vte-gtk4
+Summary:	Vala API for VTE library (GTK 4 version)
+Summary(pl.UTF-8):	API języka Vala dla biblioteki VTE (wersja dla GTK 4)
+License:	LGPL v3+
+Group:		Development/Libraries
+Requires:	%{name}-gtk4-devel = %{version}-%{release}
+Requires:	vala >= 2:0.24
+BuildArch:	noarch
+
+%description -n vala-vte-gtk4
+Vala API for VTE library (GTK 4 version).
+
+%description -n vala-vte-gtk4 -l pl.UTF-8
+API języka Vala dla biblioteki VTE (wersja dla GTK 4).
+
+%package gtk4-apidocs
+Summary:	VTE API documentation (GTK 4 version)
+Summary(pl.UTF-8):	Dokumentacja API VTE (wersja dla GTK 4)
+Group:		Documentation
+Requires:	gtk-doc-common
+BuildArch:	noarch
+
+%description gtk4-apidocs
+VTE API documentation (GTK 4 version).
+
+%description gtk4-apidocs -l pl.UTF-8
+Dokumentacja API VTE (wersja dla GTK 4).
+
 %prep
 %setup -q
 %patch0 -p1
 
 # it seems 9.0 with -std=gnu++2a is sufficient for 0.68.x (-std=gnu++20 option was added in 10.0)
-%{__sed} -i -e '/cxx_req_std/ s/gnu++20/gnu++2a/; /gxx_req_version/ s/10\.0/8.0/' meson.build
+%{__sed} -i -e '/cxx_req_std/ s/gnu++20/gnu++2a/; /gxx_req_version/ s/10\.0/9.0/' meson.build
 # ...except for single test, which wants consteval and constinit
 %{__sed} -i -e 's/consteval //;s/constinit //' src/pastify-test.cc
 
 # adjust for PLD %{_gtkdocdir}
-%{__sed} -i -e '/HTML_DIR/ s,/gtk-doc/,/doc/gtk-doc/,' doc/reference/Makefile.docs
+#%{__sed} -i -e '/HTML_DIR/ s,/gtk-doc/,/doc/gtk-doc/,' doc/reference/Makefile.docs
 
 %build
 %meson build \
@@ -150,6 +217,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %ninja_install -C build
 
+%if %{with apidocs}
+# FIXME: where to package gi-docgen generated docs?
+install -d $RPM_BUILD_ROOT%{_gtkdocdir}
+%{__mv} $RPM_BUILD_ROOT%{_docdir}/vte-2.91* $RPM_BUILD_ROOT%{_gtkdocdir}
+%endif
+
 %find_lang %{name}-2.91
 
 %clean
@@ -158,10 +231,14 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	gtk4 -p /sbin/ldconfig
+%postun	gtk4 -p /sbin/ldconfig
+
 %files -f vte-2.91.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README.md
 %attr(755,root,root) %{_bindir}/vte-2.91
+# gtk-version neutral, move to common?
 %attr(755,root,root) %{_libexecdir}/vte-urlencode-cwd
 %attr(755,root,root) %{_libdir}/libvte-2.91.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libvte-2.91.so.0
@@ -193,5 +270,31 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/vte-gtk3-2.91
+%{_gtkdocdir}/vte-2.91
+%endif
+
+%if %{with gtk4}
+%files gtk4
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/vte-2.91-gtk4
+%attr(755,root,root) %{_libdir}/libvte-2.91-gtk4.so.0
+%{_libdir}/girepository-1.0/Vte-3.91.typelib
+
+%files gtk4-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libvte-2.91-gtk4.so
+%{_includedir}/vte-2.91-gtk4
+%{_pkgconfigdir}/vte-2.91-gtk4.pc
+%{_datadir}/gir-1.0/Vte-3.91.gir
+
+%files -n vala-vte-gtk4
+%defattr(644,root,root,755)
+%{_datadir}/vala/vapi/vte-2.91-gtk4.deps
+%{_datadir}/vala/vapi/vte-2.91-gtk4.vapi
+
+%if %{with apidocs}
+%files gtk4-apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/vte-2.91-gtk4
+%endif
 %endif
