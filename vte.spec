@@ -7,13 +7,13 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.70.2
-Release:	2
+Version:	0.70.3
+Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/vte/0.70/%{name}-%{version}.tar.xz
-# Source0-md5:	5f1064024d0a961a5d6d549cb4264a1b
+# Source0-md5:	11bc66b54c2fd78c6dd764e096860429
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
