@@ -22,7 +22,7 @@ BuildRequires:	fribidi-devel >= 1.0.0
 # C11
 BuildRequires:	gcc >= 6:4.7
 BuildRequires:	gdk-pixbuf2-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.52.0
 BuildRequires:	gnutls-devel >= 3.2.7
 BuildRequires:	gobject-introspection-devel >= 0.10.0
