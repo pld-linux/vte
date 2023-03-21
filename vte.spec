@@ -7,13 +7,13 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.70.3
+Version:	0.72.0
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/vte/0.70/%{name}-%{version}.tar.xz
-# Source0-md5:	11bc66b54c2fd78c6dd764e096860429
+Source0:	https://download.gnome.org/sources/vte/0.72/%{name}-%{version}.tar.xz
+# Source0-md5:	73345a0fa1d19dce6ec158d052a781a7
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
@@ -35,7 +35,7 @@ BuildRequires:	libicu-devel >= 4.8
 # C++20 support (-std=gnu++2a, char8_t)
 BuildRequires:	libstdc++-devel >= 6:9.0
 BuildRequires:	libxml2-progs >= 2
-BuildRequires:	meson >= 0.55.0
+BuildRequires:	meson >= 0.60.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	pcre2-8-devel >= 10.21
