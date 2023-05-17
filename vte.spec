@@ -8,7 +8,7 @@ Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
 Version:	0.72.1
-Release:	1
+Release:	2
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
@@ -151,7 +151,7 @@ Summary:	Header files for VTE for GTK 4
 Summary(pl.UTF-8):	Pliki nagłówkowe VTE dla GTK 4
 License:	LGPL v3+
 Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-gtk4 = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.52.0
 Requires:	gtk4-devel >= 4.0.1
 Requires:	pango-devel >= 1:1.22.0
@@ -199,9 +199,6 @@ Dokumentacja API VTE (wersja dla GTK 4).
 %{__sed} -i -e '/cxx_req_std/ s/gnu++20/gnu++2a/; /gxx_req_version/ s/10\.0/9.0/' meson.build
 # ...except for single test, which wants consteval and constinit
 %{__sed} -i -e 's/consteval //;s/constinit //' src/pastify-test.cc
-
-# adjust for PLD %{_gtkdocdir}
-#%{__sed} -i -e '/HTML_DIR/ s,/gtk-doc/,/doc/gtk-doc/,' doc/reference/Makefile.docs
 
 %build
 %meson build \
