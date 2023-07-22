@@ -3,6 +3,7 @@
 %bcond_without	apidocs	# API documentation
 %bcond_without	glade	# Glade catalog
 %bcond_without	gtk4	# GTK+ 4 based library
+%bcond_without	systemd	# systemd
 
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
@@ -42,7 +43,7 @@ BuildRequires:	pcre2-8-devel >= 10.21
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.752
-BuildRequires:	systemd-devel >= 1:220
+%{?with_systemd:BuildRequires:	systemd-devel >= 1:220}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala >= 2:0.24
 BuildRequires:	xz
@@ -53,7 +54,7 @@ Requires:	gnutls >= 3.2.7
 Requires:	gtk+3 >= 3.24.0
 Requires:	libicu >= 4.8
 Requires:	pango >= 1:1.22.0
-Requires:	systemd-libs >= 1:220
+%{?with_systemd:Requires:	systemd-libs >= 1:220}
 Obsoletes:	vte-common < 0.42.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -134,7 +135,7 @@ Requires:	gnutls >= 3.2.7
 Requires:	gtk4 >= 4.0.1
 Requires:	libicu >= 4.8
 Requires:	pango >= 1:1.22.0
-Requires:	systemd-libs >= 1:220
+%{?with_systemd:Requires:	systemd-libs >= 1:220}
 # for common files
 Suggests:	%{name} = %{version}-%{release}
 
@@ -205,7 +206,8 @@ Dokumentacja API VTE (wersja dla GTK 4).
 	%{?with_apidocs:-Ddocs=true} \
 	%{!?with_glade:-Dglade=false} \
 	-Dgtk3=true \
-	-Dgtk4=%{__true_false gtk4}
+	-Dgtk4=%{__true_false gtk4} \
+	%{!?with_systemd:-D_systemd=false} \
 
 %ninja_build -C build
 
@@ -242,8 +244,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/girepository-1.0/Vte-2.91.typelib
 %config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.csh
 %config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.sh
+%if %{with systemd}
 %dir %{systemduserunitdir}/vte-spawn-.scope.d
 %{systemduserunitdir}/vte-spawn-.scope.d/defaults.conf
+%endif
 
 %files devel
 %defattr(644,root,root,755)
