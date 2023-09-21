@@ -1,8 +1,8 @@
---- vte-0.48.1/src/vte.cc.wordsep	2017-03-28 22:00:28.568912081 +0200
-+++ vte-0.48.1/src/vte.cc	2017-03-28 22:01:42.653878196 +0200
-@@ -94,7 +94,7 @@ typedef gunichar wint_t;
+--- vte-0.74.0/src/vte.cc.orig	2023-09-21 06:28:59.064532927 +0200
++++ vte-0.74.0/src/vte.cc	2023-09-21 06:28:53.223547680 +0200
+@@ -98,7 +98,7 @@ static inline double round(double x) {
  }
- #endif
+ #endif /* !HAVE_ROUND */
  
 -#define WORD_CHAR_EXCEPTIONS_DEFAULT "-#%&+,./=?@\\_~\302\267"sv
 +#define WORD_CHAR_EXCEPTIONS_DEFAULT "-#%&+,./=?@:;\\_~\302\267"sv
