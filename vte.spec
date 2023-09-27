@@ -42,7 +42,7 @@ BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	pcre2-8-devel >= 10.21
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	rpmbuild(macros) >= 2.029
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:220}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala >= 2:0.24
@@ -116,7 +116,6 @@ API języka Vala dla biblioteki VTE.
 Summary:	VTE API documentation (GTK+ 3 version)
 Summary(pl.UTF-8):	Dokumentacja API VTE (wersja dla GTK+ 3)
 Group:		Documentation
-Requires:	gtk-doc-common
 BuildArch:	noarch
 
 %description apidocs
@@ -183,7 +182,6 @@ API języka Vala dla biblioteki VTE (wersja dla GTK 4).
 Summary:	VTE API documentation (GTK 4 version)
 Summary(pl.UTF-8):	Dokumentacja API VTE (wersja dla GTK 4)
 Group:		Documentation
-Requires:	gtk-doc-common
 BuildArch:	noarch
 
 %description gtk4-apidocs
@@ -218,8 +216,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{with apidocs}
 # FIXME: where to package gi-docgen generated docs?
-install -d $RPM_BUILD_ROOT%{_gtkdocdir}
-%{__mv} $RPM_BUILD_ROOT%{_docdir}/vte-2.91* $RPM_BUILD_ROOT%{_gtkdocdir}
+install -d $RPM_BUILD_ROOT%{_gidocdir}
+%{__mv} $RPM_BUILD_ROOT%{_docdir}/vte-2.91* $RPM_BUILD_ROOT%{_gidocdir}
 %endif
 
 %find_lang %{name}-2.91
@@ -271,7 +269,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/vte-2.91
+%{_gidocdir}/vte-2.91
 %endif
 
 %if %{with gtk4}
@@ -296,6 +294,6 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files gtk4-apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/vte-2.91-gtk4
+%{_gidocdir}/vte-2.91-gtk4
 %endif
 %endif
