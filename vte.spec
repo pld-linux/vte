@@ -8,13 +8,13 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.74.2
+Version:	0.76.0
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/vte/0.74/%{name}-%{version}.tar.xz
-# Source0-md5:	7770d04e515d175013b50b05d6d6a80a
+Source0:	https://download.gnome.org/sources/vte/0.76/%{name}-%{version}.tar.xz
+# Source0-md5:	7b0d0d04bc311f707c03cb1a406a68ee
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
@@ -24,23 +24,25 @@ BuildRequires:	fribidi-devel >= 1.0.0
 BuildRequires:	gcc >= 6:4.7
 BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.52.0
+BuildRequires:	glib2-devel >= 1:2.72.0
 BuildRequires:	gnutls-devel >= 3.2.7
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.24.0
-%{?with_gtk4:BuildRequires:	gtk4-devel >= 4.0.1}
+%{?with_gtk4:BuildRequires:	gtk4-devel >= 4.14.0}
 %{?with_apidocs:BuildRequires:	gi-docgen}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libicu-devel >= 4.8
 # C++20 support (-std=gnu++2a, char8_t)
 BuildRequires:	libstdc++-devel >= 6:9.0
 BuildRequires:	libxml2-progs >= 2
+BuildRequires:	lz4-devel >= 1.9
 BuildRequires:	meson >= 0.60.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	pcre2-8-devel >= 10.21
 BuildRequires:	pkgconfig
+BuildRequires:	python3-devel >= 1:3.7
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.029
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:220}
@@ -49,10 +51,11 @@ BuildRequires:	vala >= 2:0.24
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires:	fribidi >= 1.0.0
-Requires:	glib2 >= 1:2.52.0
+Requires:	glib2 >= 1:2.72.0
 Requires:	gnutls >= 3.2.7
 Requires:	gtk+3 >= 3.24.0
 Requires:	libicu >= 4.8
+Requires:	lz4 >= 1.9
 Requires:	pango >= 1:1.22.0
 %{?with_systemd:Requires:	systemd-libs >= 1:220}
 Obsoletes:	vte-common < 0.42.0
@@ -72,7 +75,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe VTE dla GTK+ 3
 License:	LGPL v3+
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.52.0
+Requires:	glib2-devel >= 1:2.72.0
 Requires:	gtk+3-devel >= 3.24.0
 Requires:	pango-devel >= 1:1.22.0
 Conflicts:	gnome-libs-devel < 1.4.1.2
@@ -129,9 +132,9 @@ Summary:	VTE terminal widget library (GTK 4 version)
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE (wersja dla GTK 4)
 Group:		Libraries
 Requires:	fribidi >= 1.0.0
-Requires:	glib2 >= 1:2.52.0
+Requires:	glib2 >= 1:2.72.0
 Requires:	gnutls >= 3.2.7
-Requires:	gtk4 >= 4.0.1
+Requires:	gtk4 >= 4.14.0
 Requires:	libicu >= 4.8
 Requires:	pango >= 1:1.22.0
 %{?with_systemd:Requires:	systemd-libs >= 1:220}
@@ -152,8 +155,8 @@ Summary(pl.UTF-8):	Pliki nagłówkowe VTE dla GTK 4
 License:	LGPL v3+
 Group:		X11/Development/Libraries
 Requires:	%{name}-gtk4 = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.52.0
-Requires:	gtk4-devel >= 4.0.1
+Requires:	glib2-devel >= 1:2.72.0
+Requires:	gtk4-devel >= 4.14.0
 Requires:	pango-devel >= 1:1.22.0
 
 %description gtk4-devel
