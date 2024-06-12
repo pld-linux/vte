@@ -2,19 +2,19 @@
 # Conditional build:
 %bcond_without	apidocs	# API documentation
 %bcond_without	glade	# Glade catalog
-%bcond_without	gtk4	# GTK+ 4 based library
+%bcond_without	gtk4	# GTK 4 based library
 %bcond_without	systemd	# systemd
 
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.76.2
+Version:	0.76.3
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/vte/0.76/%{name}-%{version}.tar.xz
-# Source0-md5:	485e287e57923496ca0eaac30c93695a
+# Source0-md5:	3bc0aaac70cb52b1ba407370ac8915bb
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
