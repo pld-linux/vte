@@ -8,13 +8,14 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.76.3
+Version:	0.76.4
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/vte/0.76/%{name}-%{version}.tar.xz
-# Source0-md5:	3bc0aaac70cb52b1ba407370ac8915bb
+#Source0Download: https://gitlab.gnome.org/GNOME/vte/-/tags
+Source0:	https://gitlab.gnome.org/GNOME/vte/-/archive/%{version}/%{name}-%{version}.tar.bz2
+# Source0-md5:	7a9cb11139e8f11e286f31816b2b4b43
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
@@ -46,9 +47,7 @@ BuildRequires:	python3-devel >= 1:3.7
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.029
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:220}
-BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala >= 2:0.24
-BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires:	fribidi >= 1.0.0
 Requires:	glib2 >= 1:2.72.0
@@ -236,7 +235,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f vte-2.91.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README.md
+%doc AUTHORS README.md
 %attr(755,root,root) %{_bindir}/vte-2.91
 # gtk-version neutral, move to common?
 %attr(755,root,root) %{_libexecdir}/vte-urlencode-cwd
