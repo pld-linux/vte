@@ -8,14 +8,14 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.76.4
+Version:	0.78.0
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
 #Source0Download: https://gitlab.gnome.org/GNOME/vte/-/tags
 Source0:	https://gitlab.gnome.org/GNOME/vte/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	7a9cb11139e8f11e286f31816b2b4b43
+# Source0-md5:	414b216419658e238b21d5b65c58f088
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
@@ -34,8 +34,8 @@ BuildRequires:	gtk+3-devel >= 3.24.0
 %{?with_apidocs:BuildRequires:	gi-docgen}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libicu-devel >= 4.8
-# C++20 support (-std=gnu++2a, char8_t)
-BuildRequires:	libstdc++-devel >= 6:9.0
+# C++20 support (-std=gnu++20)
+BuildRequires:	libstdc++-devel >= 6:10.0
 BuildRequires:	libxml2-progs >= 2
 BuildRequires:	lz4-devel >= 1.9
 BuildRequires:	meson >= 0.60.0
@@ -196,10 +196,8 @@ Dokumentacja API VTE (wersja dla GTK 4).
 %setup -q
 %patch0 -p1
 
-# it seems 9.0 with -std=gnu++2a is sufficient for 0.68.x (-std=gnu++20 option was added in 10.0)
-%{__sed} -i -e '/cxx_req_std/ s/gnu++20/gnu++2a/; /gxx_req_version/ s/10\.0/9.0/' meson.build
-# ...except for single test, which wants consteval and constinit
-%{__sed} -i -e 's/consteval //;s/constinit //' src/pastify-test.cc
+# gcc 11 fails to compile
+%{__sed} -i -e 's/constexpr noexcept/noexcept/' src/color-test.cc
 
 %build
 %meson build \
