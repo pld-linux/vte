@@ -8,14 +8,15 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.78.2
-Release:	2
+Version:	0.78.3
+Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
 #Source0Download: https://gitlab.gnome.org/GNOME/vte/-/tags
-Source0:	https://gitlab.gnome.org/GNOME/vte/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	6a67ded7d8d0f023504063f3914662d5
+#Source0:	https://gitlab.gnome.org/GNOME/vte/-/archive/%{version}/%{name}-%{version}.tar.bz2
+Source0:	https://download.gnome.org/sources/vte/0.78/%{name}-%{version}.tar.xz
+# Source0-md5:	8801cff003dd66c23c75cfb393811a49
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
@@ -47,7 +48,9 @@ BuildRequires:	python3-devel >= 1:3.7
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.029
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:220}
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala >= 2:0.24
+BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires:	fribidi >= 1.0.0
 Requires:	glib2 >= 1:2.72.0
@@ -194,7 +197,7 @@ Dokumentacja API VTE (wersja dla GTK 4).
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 
 # gcc 11 fails to compile
 %{__sed} -i -e 's/constexpr noexcept/noexcept/' src/color-test.cc
