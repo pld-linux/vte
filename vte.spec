@@ -8,7 +8,7 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.78.3
+Version:	0.78.4
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
@@ -16,7 +16,7 @@ Group:		X11/Libraries
 #Source0Download: https://gitlab.gnome.org/GNOME/vte/-/tags
 #Source0:	https://gitlab.gnome.org/GNOME/vte/-/archive/%{version}/%{name}-%{version}.tar.bz2
 Source0:	https://download.gnome.org/sources/vte/0.78/%{name}-%{version}.tar.xz
-# Source0-md5:	8801cff003dd66c23c75cfb393811a49
+# Source0-md5:	2bad029926759859b47a647b2b186e99
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel
@@ -46,7 +46,7 @@ BuildRequires:	pcre2-8-devel >= 10.21
 BuildRequires:	pkgconfig
 BuildRequires:	python3-devel >= 1:3.7
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 2.029
+BuildRequires:	rpmbuild(macros) >= 2.042
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:220}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala >= 2:0.24
@@ -203,19 +203,19 @@ Dokumentacja API VTE (wersja dla GTK 4).
 %{__sed} -i -e 's/constexpr noexcept/noexcept/' src/color-test.cc
 
 %build
-%meson build \
+%meson \
 	%{?with_apidocs:-Ddocs=true} \
 	%{!?with_glade:-Dglade=false} \
 	-Dgtk3=true \
 	-Dgtk4=%{__true_false gtk4} \
 	%{!?with_systemd:-D_systemd=false} \
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %if %{with apidocs}
 # FIXME: where to package gi-docgen generated docs?
