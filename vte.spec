@@ -8,18 +8,18 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.78.4
+Version:	0.80.0
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
 #Source0Download: https://gitlab.gnome.org/GNOME/vte/-/tags
 #Source0:	https://gitlab.gnome.org/GNOME/vte/-/archive/%{version}/%{name}-%{version}.tar.bz2
-Source0:	https://download.gnome.org/sources/vte/0.78/%{name}-%{version}.tar.xz
-# Source0-md5:	2bad029926759859b47a647b2b186e99
+Source0:	https://download.gnome.org/sources/vte/0.80/%{name}-%{version}.tar.xz
+# Source0-md5:	da3ebaa59f3c686e0f8b31e3ce4889d6
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
-BuildRequires:	cairo-gobject-devel
+BuildRequires:	cairo-gobject-devel >= 1.0
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	fribidi-devel >= 1.0.0
 # C11
@@ -33,13 +33,12 @@ BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.24.0
 %{?with_gtk4:BuildRequires:	gtk4-devel >= 4.14.0}
 %{?with_apidocs:BuildRequires:	gi-docgen}
-BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libicu-devel >= 4.8
 # C++20 support (-std=gnu++20)
 BuildRequires:	libstdc++-devel >= 6:10.0
 BuildRequires:	libxml2-progs >= 2
 BuildRequires:	lz4-devel >= 1.9
-BuildRequires:	meson >= 0.60.0
+BuildRequires:	meson >= 1.3.2
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel >= 1:1.22.0
 BuildRequires:	pcre2-8-devel >= 10.21
@@ -238,17 +237,22 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS README.md
 %attr(755,root,root) %{_bindir}/vte-2.91
-# gtk-version neutral, move to common?
-%attr(755,root,root) %{_libexecdir}/vte-urlencode-cwd
 %attr(755,root,root) %{_libdir}/libvte-2.91.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libvte-2.91.so.0
 %{_libdir}/girepository-1.0/Vte-2.91.typelib
+%{_datadir}/xdg-terminals/org.gnome.Vte.App.Gtk3.desktop
+%{_desktopdir}/org.gnome.Vte.App.Gtk3.desktop
+
+# gtk-version neutral, some common package?
 %config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.csh
 %config(noreplace) %verify(not md5 mtime size) /etc/profile.d/vte.sh
+%attr(755,root,root) %{_libexecdir}/vte-urlencode-cwd
 %if %{with systemd}
 %dir %{systemduserunitdir}/vte-spawn-.scope.d
 %{systemduserunitdir}/vte-spawn-.scope.d/defaults.conf
 %endif
+# FIXME: probably should be in some system or xdg specific package
+%dir %{_datadir}/xdg-terminals
 
 %files devel
 %defattr(644,root,root,755)
@@ -281,6 +285,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/vte-2.91-gtk4
 %attr(755,root,root) %{_libdir}/libvte-2.91-gtk4.so.0
 %{_libdir}/girepository-1.0/Vte-3.91.typelib
+%{_datadir}/xdg-terminals/org.gnome.Vte.App.Gtk4.desktop
+%{_desktopdir}/org.gnome.Vte.App.Gtk4.desktop
 
 %files gtk4-devel
 %defattr(644,root,root,755)
