@@ -21,6 +21,7 @@ Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel >= 1.0
 BuildRequires:	docbook-dtd412-xml
+BuildRequires:	fast_float-devel
 BuildRequires:	fribidi-devel >= 1.0.0
 # C11
 BuildRequires:	gcc >= 6:4.7
