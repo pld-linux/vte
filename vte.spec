@@ -8,15 +8,15 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.80.4
+Version:	0.82.3
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
 Group:		X11/Libraries
 #Source0Download: https://gitlab.gnome.org/GNOME/vte/-/tags
 #Source0:	https://gitlab.gnome.org/GNOME/vte/-/archive/%{version}/%{name}-%{version}.tar.bz2
-Source0:	https://download.gnome.org/sources/vte/0.80/%{name}-%{version}.tar.xz
-# Source0-md5:	8d3dca19d133217461fc2f3f23f94e02
+Source0:	https://download.gnome.org/sources/vte/0.82/%{name}-%{version}.tar.xz
+# Source0-md5:	42b45345e5d5217ab1244ab7fae342fd
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel >= 1.0
@@ -34,9 +34,10 @@ BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.24.0
 %{?with_gtk4:BuildRequires:	gtk4-devel >= 4.14.0}
 %{?with_apidocs:BuildRequires:	gi-docgen}
+BuildRequires:	libfmt-devel >= 11.0.0
 BuildRequires:	libicu-devel >= 4.8
-# C++20 support (-std=gnu++20)
-BuildRequires:	libstdc++-devel >= 6:10.0
+# C++23 support (-std=gnu++23)
+BuildRequires:	libstdc++-devel >= 6:12.1
 BuildRequires:	libxml2-progs >= 2
 BuildRequires:	lz4-devel >= 1.9
 BuildRequires:	meson >= 1.3.2
@@ -47,6 +48,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	python3-devel >= 1:3.7
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.042
+BuildRequires:	simdutf-devel >= 6.2.0
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:220}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala >= 2:0.24
@@ -59,6 +61,7 @@ Requires:	gtk+3 >= 3.24.0
 Requires:	libicu >= 4.8
 Requires:	lz4 >= 1.9
 Requires:	pango >= 1:1.22.0
+Requires:	simdutf >= 6.2.0
 %{?with_systemd:Requires:	systemd-libs >= 1:220}
 Obsoletes:	vte-common < 0.42.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
