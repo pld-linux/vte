@@ -36,8 +36,8 @@ BuildRequires:	gtk+3-devel >= 3.24.0
 %{?with_apidocs:BuildRequires:	gi-docgen}
 BuildRequires:	libfmt-devel >= 11.0.0
 BuildRequires:	libicu-devel >= 4.8
-# C++23 support (-std=gnu++23)
-BuildRequires:	libstdc++-devel >= 6:12.1
+# C++23 support (-std=gnu++23) with std::out_ptr support (P1132R8)
+BuildRequires:	libstdc++-devel >= 6:14
 BuildRequires:	libxml2-progs >= 2
 BuildRequires:	lz4-devel >= 1.9
 BuildRequires:	meson >= 1.3.2
