@@ -8,7 +8,7 @@
 Summary:	VTE terminal widget library
 Summary(pl.UTF-8):	Biblioteka z kontrolką terminala VTE
 Name:		vte
-Version:	0.84.0
+Version:	0.84.1
 Release:	1
 # some files have LGPL v2.1+ signature, but some LGPL v3+
 License:	LGPL v3+ (library), GPL v3+ (app)
@@ -16,7 +16,7 @@ Group:		X11/Libraries
 #Source0Download: https://gitlab.gnome.org/GNOME/vte/-/tags
 #Source0:	https://gitlab.gnome.org/GNOME/vte/-/archive/%{version}/%{name}-%{version}.tar.bz2
 Source0:	https://download.gnome.org/sources/vte/0.84/%{name}-%{version}.tar.xz
-# Source0-md5:	3cb709a72cc49dd56032e4be7e59467f
+# Source0-md5:	ea4e16dbba54a6b8ba2cbb95cfdaa217
 Patch0:		%{name}-wordsep.patch
 URL:		https://wiki.gnome.org/Apps/Terminal/VTE
 BuildRequires:	cairo-gobject-devel >= 1.0
@@ -241,8 +241,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS README.md
 %attr(755,root,root) %{_bindir}/vte-2.91
-%attr(755,root,root) %{_libdir}/libvte-2.91.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libvte-2.91.so.0
+%{_libdir}/libvte-2.91.so.*.*.*
+%ghost %{_libdir}/libvte-2.91.so.0
 %{_libdir}/girepository-1.0/Vte-2.91.typelib
 %{_datadir}/xdg-terminals/org.gnome.Vte.App.Gtk3.desktop
 %{_desktopdir}/org.gnome.Vte.App.Gtk3.desktop
@@ -260,7 +260,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libvte-2.91.so
+%{_libdir}/libvte-2.91.so
 %{_includedir}/vte-2.91
 %{_pkgconfigdir}/vte-2.91.pc
 %{_datadir}/gir-1.0/Vte-2.91.gir
@@ -287,14 +287,14 @@ rm -rf $RPM_BUILD_ROOT
 %files gtk4
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/vte-2.91-gtk4
-%attr(755,root,root) %{_libdir}/libvte-2.91-gtk4.so.0
+%{_libdir}/libvte-2.91-gtk4.so.0
 %{_libdir}/girepository-1.0/Vte-3.91.typelib
 %{_datadir}/xdg-terminals/org.gnome.Vte.App.Gtk4.desktop
 %{_desktopdir}/org.gnome.Vte.App.Gtk4.desktop
 
 %files gtk4-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libvte-2.91-gtk4.so
+%{_libdir}/libvte-2.91-gtk4.so
 %{_includedir}/vte-2.91-gtk4
 %{_pkgconfigdir}/vte-2.91-gtk4.pc
 %{_datadir}/gir-1.0/Vte-3.91.gir
